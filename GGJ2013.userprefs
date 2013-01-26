@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Popup.cs">
+    <Files>
+      <File FileName="Assets\ScaleEvent.cs" Line="12" Column="23" />
+      <File FileName="Assets\Popup.cs" Line="12" Column="17" />
+      <File FileName="Assets\LevelBuilder.cs" Line="106" Column="25" />
+      <File FileName="Assets\BallActions.cs" Line="21" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
