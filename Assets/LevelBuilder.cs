@@ -29,18 +29,13 @@ public class LevelBuilder : MonoBehaviour {
 	}
 	
 	void Start () {		
-		
 		Debug.Log ("Level Builder Start() from object " + this.gameObject.GetInstanceID());
-		if (currentLevel == 0) {
-		  Debug.Log("Building because level zero actually is " + currentLevel);
-		  //BuildLevel();
-		}
-		
+		OnLevelWasLoaded();
 	}
-
+	
+	
 	// Use this for initialization
 	void OnLevelWasLoaded () {
-		Debug.Log ("OnLevelLoaded sees currentLevel as " + currentLevel + " " + this.gameObject.GetInstanceID());
 		BuildLevel();
 	}
 	
@@ -48,9 +43,6 @@ public class LevelBuilder : MonoBehaviour {
 				
 		Debug.Log ("Build Level was loaded current level is " + currentLevel + " " + this.gameObject.GetInstanceID());
 	
-		
-		if (currentLevel == null )
-			currentLevel = 0;
 		
 		allLevels = new ArrayList();
 		
@@ -147,7 +139,23 @@ public class LevelBuilder : MonoBehaviour {
 	
 	}
 	
-	public void incrementLevel() {
+	public void restartGame () {
+		currentLevel = 0;
+		reloadScene();
+	}
+	
+	public void loadNextLevel () {
+		Debug.Log ("loadNextLevel sees currentLevel as " + currentLevel + " " + this.gameObject.GetInstanceID());
+		incrementLevel();
+		reloadScene();
+	}
+	
+	void reloadScene () {
+		// Reset the scene
+		Application.LoadLevel(Application.loadedLevel);
+	}
+	
+	void incrementLevel() {
 		this.currentLevel += 1;
 		Debug.Log("Current Level is " + currentLevel + " " + this.gameObject.GetInstanceID());
 	}
