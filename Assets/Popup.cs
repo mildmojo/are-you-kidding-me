@@ -32,6 +32,8 @@ public class Popup : MonoBehaviour {
 		
 		if (!(other.gameObject.tag == "Pillar")) {			
 			float distance = Vector3.Distance(this.transform.position, other.transform.position);
+			if (this.rigidbody.velocity.z < 0) 
+				this.rigidbody.velocity = Vector3.zero;
 			this.rigidbody.AddForce(Vector3.up.normalized * popupForce);
 			//this.gameObject.rigidbody.AddForce(Vector3.up.normalized * (popupForce * (falloffDistance - distance)/falloffDistance ));
 		} else {
