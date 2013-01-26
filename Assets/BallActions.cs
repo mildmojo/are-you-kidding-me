@@ -6,10 +6,8 @@ public class BallActions : MonoBehaviour {
 	LevelBuilder levelBuilder;
 	
 	// Use this for initialization
-	void Start () {
-		
-		levelBuilder = GameObject.Find("LevelBuilder").GetComponent<LevelBuilder>();	
-		
+	void Start () {		
+		levelBuilder = GameObject.Find("LevelBuilder").GetComponent<LevelBuilder>();			
 	}
 	
 	// Update is called once per frame
@@ -22,7 +20,7 @@ public class BallActions : MonoBehaviour {
 		if (other.gameObject.name == "Terrain") {
 			Debug.Log("Restart Level");
 			Application.LoadLevel(Application.loadedLevel);
-		} else if (other.gameObject.name == "Exit") {
+		} else if (other.gameObject.name == "Exit(Clone)") {
 			Debug.Log ("Level Complete");
 			levelBuilder.incrementLevel();
 			Application.LoadLevel (Application.loadedLevel);

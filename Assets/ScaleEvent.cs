@@ -9,7 +9,7 @@ public class ScaleEvent : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		dieAtSize = 1000;
-		propogationSpeed = 2.0f;
+		propogationSpeed = 1.0f;
 	
 	}
 	
