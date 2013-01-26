@@ -8,8 +8,8 @@ public class ScaleEvent : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		dieAtSize = 100;
-		propogationSpeed = 2.0f;
+		dieAtSize = 1000;
+		propogationSpeed = 1.0f;
 	
 	}
 	

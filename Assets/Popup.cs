@@ -9,7 +9,7 @@ public class Popup : MonoBehaviour {
 	public GameObject Fire; 
 	// Use this for initialization
 	void Awake () {	
-		popupForce = 400;
+		popupForce = 1000;
 		falloffDistance = 100;
 		
 	}

@@ -6,6 +6,7 @@ public class LevelBuilder : MonoBehaviour {
 		
 	public GameObject Pillar;
 	public GameObject Exit;
+	public GameObject Ball;
 	
 	private IList allLevels;
 	
@@ -29,13 +30,18 @@ public class LevelBuilder : MonoBehaviour {
 	}
 	
 	void Start () {		
+		
 		Debug.Log ("Level Builder Start() from object " + this.gameObject.GetInstanceID());
-		OnLevelWasLoaded();
+		if (currentLevel == 0) {
+		  Debug.Log("Building because level zero actually is " + currentLevel);
+		  BuildLevel();
+		}
+		
 	}
-	
-	
+
 	// Use this for initialization
 	void OnLevelWasLoaded () {
+		Debug.Log ("OnLevelLoaded sees currentLevel as " + currentLevel + " " + this.gameObject.GetInstanceID());
 		BuildLevel();
 	}
 	
@@ -44,12 +50,24 @@ public class LevelBuilder : MonoBehaviour {
 		Debug.Log ("Build Level was loaded current level is " + currentLevel + " " + this.gameObject.GetInstanceID());
 	
 		
+		if (currentLevel == null )
+			currentLevel = 0;
+		
 		allLevels = new ArrayList();
+		
+		/* 0 no square
+		 * 1 regular
+		 * 2 pointy
+		 * 3 wall
+		 * 4 superspring
+		 * 8 Start
+		 * 9 exit
+		 */
 		
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
 								{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
-								{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{0,0,0,9,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
 								{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
 								{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
 								{1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
@@ -63,14 +81,14 @@ public class LevelBuilder : MonoBehaviour {
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
-								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},	
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3}}	);	
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
 								{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
-								{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{0,0,9,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
 								{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
 								{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
 								{1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
@@ -84,7 +102,7 @@ public class LevelBuilder : MonoBehaviour {
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
-								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,8,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},	
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3}}	);	
@@ -105,7 +123,28 @@ public class LevelBuilder : MonoBehaviour {
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,8,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},	
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3}}	);		
+		allLevels.Add ( new 
+					int [,] {	{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
+								{1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
+								{1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,1,3},	
+								{1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
+								{1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
+								{1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
+								{1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,8,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},	
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3}}	);		
@@ -129,33 +168,20 @@ public class LevelBuilder : MonoBehaviour {
 					GameObject newPillar = (GameObject) GameObject.Instantiate(Pillar, new Vector3(i*2.1f, -10, j*2.1f), Quaternion.identity);
 					newPillar.transform.Rotate(-90,0,0);
 				} else if (level[i,j] == 9) {
-					GameObject newExit = (GameObject) GameObject.Instantiate(Exit, new Vector3(i*2.1f, -10, j*2.1f), Quaternion.identity);
+					GameObject newExit = (GameObject) GameObject.Instantiate(Exit, new Vector3(i, -10, j), Quaternion.identity);
 					newExit.transform.Rotate(-90,0,0);
 				} else if (level[i,j] == 3) {
 					// Create wall
+				} else if (level[i,j] == 8) {
+					GameObject newBall = (GameObject) GameObject.Instantiate(Ball, new Vector3(i*2.1f, 0, j*2.1f), Quaternion.identity);
+					
 				}
 			}
 		}
 	
 	}
 	
-	public void restartGame () {
-		currentLevel = 0;
-		reloadScene();
-	}
-	
-	public void loadNextLevel () {
-		Debug.Log ("loadNextLevel sees currentLevel as " + currentLevel + " " + this.gameObject.GetInstanceID());
-		incrementLevel();
-		reloadScene();
-	}
-	
-	void reloadScene () {
-		// Reset the scene
-		Application.LoadLevel(Application.loadedLevel);
-	}
-	
-	void incrementLevel() {
+	public void incrementLevel() {
 		this.currentLevel += 1;
 		Debug.Log("Current Level is " + currentLevel + " " + this.gameObject.GetInstanceID());
 	}
