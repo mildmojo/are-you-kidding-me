@@ -39,9 +39,9 @@ public class Popup : MonoBehaviour {
 		}
 		
 		// Don't propagate through walls.
-//		if (wallBetween(other.transform.position, this.rigidbody.position)) {
-//			return;
-//		}
+		if (wallBetween(other.transform.position, this.rigidbody.position)) {
+			return;
+		}
 		
 		// Pillar movement looks better if wave force only acts on resting or rising pillars.
 		if (this.rigidbody.velocity.z < 0) {
@@ -66,7 +66,7 @@ public class Popup : MonoBehaviour {
 
 	bool wallBetween(Vector3 vect1, Vector3 vect2) {
 		Vector3 test_ray = xzPlane(vect1) - xzPlane(vect2);
-		LayerMask layerMask = LayerMask(LayerMask.NameToLayer('Walls'));
+		LayerMask layerMask = LayerMask(LayerMask.NameToLayer('Wall'));
 		return Physics.Raycast(test_ray, test_ray.sqrMagnitude, layerMask);
 	}
 
