@@ -60,14 +60,14 @@ public class Popup : MonoBehaviour {
 
 	}
 	
-	void xzPlane(Vector3 vector) {
-		return Vector3(vector.x, 0, vector.y);
+	Vector3 xzPlane(Vector3 vector) {
+		return new Vector3(vector.x, 0, vector.y);
 	}
 
 	bool wallBetween(Vector3 vect1, Vector3 vect2) {
-		Vector3 test_ray = xzPlane(vect1) - xzPlane(vect2);
-		LayerMask layerMask = LayerMask(LayerMask.NameToLayer('Wall'));
-		return Physics.Raycast(test_ray, test_ray.sqrMagnitude, layerMask);
+		Vector3 test_ray = xzPlane(vect2) - xzPlane(vect1);
+		int layerMask = LayerMask.NameToLayer("Wall");
+		return Physics.Raycast(vect1, test_ray, test_ray.sqrMagnitude, layerMask);
 	}
 
 }
