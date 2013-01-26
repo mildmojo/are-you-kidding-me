@@ -21,6 +21,12 @@ public class BallActions : MonoBehaviour {
 			Debug.Log("Restart Level");
 			Application.LoadLevel(Application.loadedLevel);
 		} else if (other.gameObject.name == "Exit(Clone)") {
+			
+		}
+	}
+	void OnTriggerEnter(Collider other) {
+		if (other.gameObject.tag == "Exit") {
+			
 			Debug.Log ("Level Complete");
 			levelBuilder.incrementLevel();
 			Application.LoadLevel (Application.loadedLevel);
