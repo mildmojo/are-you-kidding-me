@@ -25,6 +25,11 @@ public class LevelBuilder : MonoBehaviour {
 	
 	private static bool created = false;
 	
+	public const float FIRE_ELEVATION = -7f;
+	public const float BALL_ELEVATION = 0f;
+	public const float PILLAR_ELEVATION = -10f;
+	public const float WALL_ELEVATION = 0f;
+	
 	void Awake() {
 		
 		if (!created) {
@@ -201,24 +206,24 @@ public class LevelBuilder : MonoBehaviour {
 		for (int i = 0; i < 20;i++) {
 			for (int j = 0; j < 20; j++) {		
 				if (level[i,j] == 1) {					
-					GameObject newPillar = (GameObject) GameObject.Instantiate(Pillar, new Vector3(i*2.1f, -10, j*2.1f), Quaternion.identity);
+					GameObject newPillar = (GameObject) GameObject.Instantiate(Pillar, new Vector3(i*2.1f, PILLAR_ELEVATION, j*2.1f), Quaternion.identity);
 					newPillar.transform.Rotate(-90,0,0);
 				} else if (level[i,j] == 9) {
-					GameObject newExit = (GameObject) GameObject.Instantiate(Exit, new Vector3(i, -10, j), Quaternion.identity);
+					GameObject newExit = (GameObject) GameObject.Instantiate(Exit, new Vector3(i, PILLAR_ELEVATION, j), Quaternion.identity);
 					newExit.transform.Rotate(-90,0,0);
 					//GameObject newTube = (GameObject) GameObject.Instantiate(Tube, new Vector3(i, 5, j), Quaternion.identity);
 					//newTube.transform.Rotate(-90,0,0);
 				//	ParticleSystem newParticle = (ParticleSystem) ParticleSystem.Instantiate(particles, new Vector3(i,5,j), Quaternion.identity);
 				//	Light newLight = (Light) Light.Instantiate(exitLight, new Vector3(i,5,j), Quaternion.identity);
 				} else if (level[i,j] == 3) {
-					GameObject newWall = (GameObject) GameObject.Instantiate(Wall, new Vector3(i*2.1f, 0, j*2.1f), Quaternion.identity);
+					GameObject newWall = (GameObject) GameObject.Instantiate(Wall, new Vector3(i*2.1f, WALL_ELEVATION, j*2.1f), Quaternion.identity);
 					newWall.transform.Rotate(-90,0,0);
 				} else if (level[i,j] == 8) {
-					GameObject newBall = (GameObject) GameObject.Instantiate(Ball, new Vector3(i*2.1f, 0, j*2.1f), Quaternion.identity);
-					GameObject newPillar = (GameObject) GameObject.Instantiate(Pillar, new Vector3(i*2.1f, -10, j*2.1f), Quaternion.identity);
+					GameObject newBall = (GameObject) GameObject.Instantiate(Ball, new Vector3(i*2.1f, BALL_ELEVATION, j*2.1f), Quaternion.identity);
+					GameObject newPillar = (GameObject) GameObject.Instantiate(Pillar, new Vector3(i*2.1f, PILLAR_ELEVATION, j*2.1f), Quaternion.identity);
 					newPillar.transform.Rotate(-90,0,0);					
 				} else if (level[i,j] == 7) {
-					GameObject newInvisibleWall = (GameObject) GameObject.Instantiate(InvisibleWall, new Vector3(i*2.1f, 0, j*2.1f), Quaternion.identity);
+					GameObject newInvisibleWall = (GameObject) GameObject.Instantiate(InvisibleWall, new Vector3(i*2.1f, WALL_ELEVATION, j*2.1f), Quaternion.identity);
 					newInvisibleWall.transform.Rotate(-90,0,0);
 				}
 			}
