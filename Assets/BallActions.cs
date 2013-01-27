@@ -4,6 +4,7 @@ using System.Collections;
 public class BallActions : MonoBehaviour {
 	
 	LevelBuilder levelBuilder;
+	public AudioClip flatline;
 	
 	// Use this for initialization
 	void Start () {		
@@ -16,9 +17,10 @@ public class BallActions : MonoBehaviour {
 	}
 	
 	void OnCollisionEnter(Collision other) {
-		Debug.Log("collided with " + other.gameObject.name);
+//		Debug.Log("collided with " + other.gameObject.name);
 		if (other.gameObject.name == "Plane") {
 			Debug.Log("Restart Level");
+			audio.Play();
 			Application.LoadLevel(Application.loadedLevel);
 		} else if (other.gameObject.name == "Exit(Clone)") {
 			

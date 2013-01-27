@@ -15,26 +15,25 @@ Platform assembly: C:\Users\bakerc\Documents\are-you-kidding-me\are-you-kidding-
 Loading C:\Users\bakerc\Documents\are-you-kidding-me\are-you-kidding-me_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: C:\Users\bakerc\Documents\are-you-kidding-me\are-you-kidding-me_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
 Loading C:\Users\bakerc\Documents\are-you-kidding-me\are-you-kidding-me_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
-- Completed reload, in  0.046 seconds
+- Completed reload, in  0.054 seconds
 desktop: 1600x900 60Hz; virtual: 1600x900 at 0,0
 <RI> Initializing input.
 XInput1_3.dll not found.
 <RI> Input initialized.
 Unsupported: Hidden/Dof/DX11Dof
-Create new levelbuilder 10220
+Create new levelbuilder 10304
+ 
+(Filename: C:/BuildAgent/work/812c4f5049264fad/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 43)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 367. Operation took 2.134277 ms.
+OnLevelLoaded sees currentLevel as 0 10304
  
 (Filename: C:/BuildAgent/work/812c4f5049264fad/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 43)
 
 Platform assembly: C:\Users\bakerc\Documents\are-you-kidding-me\are-you-kidding-me_Data\Managed\Boo.Lang.dll (this message is harmless)
-Level Builder Start() from object 10220
- 
-(Filename: C:/BuildAgent/work/812c4f5049264fad/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 43)
-
-Building because level zero actually is 0
- 
-(Filename: C:/BuildAgent/work/812c4f5049264fad/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 43)
-
-Build Level was loaded current level is 0 10220
+Level Builder Start() from object 10304
  
 (Filename: C:/BuildAgent/work/812c4f5049264fad/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 43)
 
@@ -42,7 +41,20 @@ Loading level 0
  
 (Filename: C:/BuildAgent/work/812c4f5049264fad/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 43)
 
-collided with Pillar(Clone)
+Current level is 0 number of levels is 9
  
 (Filename: C:/BuildAgent/work/812c4f5049264fad/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 43)
+
+Get level name 0
+ 
+(Filename: C:/BuildAgent/work/812c4f5049264fad/Runtime/ExportGenerated/StandalonePlayer/UnityEngineDebug.cpp Line: 43)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 9 unused Assets to reduce memory usage. Loaded Objects now: 234. Operation took 2.072699 ms.
+NullReferenceException
+  at (wrapper managed-to-native) UnityEngine.Component:get_gameObject ()
+  at LevelBuilder.OnLevelWasLoaded () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
 
