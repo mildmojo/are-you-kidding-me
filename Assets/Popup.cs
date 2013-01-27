@@ -11,7 +11,7 @@ public class Popup : MonoBehaviour {
 	public GameObject Fire; 
 	// Use this for initialization
 	void Awake () {	
-		popupForce = 1000;
+		popupForce = 30;
 		falloffDistance = 100;
 		
 	}
@@ -57,9 +57,9 @@ public class Popup : MonoBehaviour {
 
 	
 	void OnMouseDown() {		
-		GameObject newFire = (GameObject) GameObject.Instantiate(Fire, new Vector3(transform.position.x, -7, transform.position.z), transform.rotation);
-		newFire.transform.Rotate(-90,0,0);
-		audio.PlayOneShot(heartBeat);
+		//GameObject newFire = (GameObject) GameObject.Instantiate(Fire, new Vector3(transform.position.x, -7, transform.position.z), transform.rotation);
+		//newFire.transform.Rotate(-90,0,0);
+		//audio.PlayOneShot(heartBeat);
 		
 
 	}
