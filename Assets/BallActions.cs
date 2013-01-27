@@ -17,7 +17,7 @@ public class BallActions : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision other) {
 		Debug.Log("collided with " + other.gameObject.name);
-		if (other.gameObject.name == "Terrain") {
+		if (other.gameObject.name == "Plane") {
 			Debug.Log("Restart Level");
 			Application.LoadLevel(Application.loadedLevel);
 		} else if (other.gameObject.name == "Exit(Clone)") {
