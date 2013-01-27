@@ -46,7 +46,7 @@ public class Popup : MonoBehaviour {
 		//}
 		
 		// Pillar movement looks better if wave force only acts on resting or rising pillars.
-		if (this.rigidbody.velocity.z < 0) {
+		if (this.rigidbody.velocity.y < 0) {
 			this.rigidbody.velocity = Vector3.zero;
 		}
 
