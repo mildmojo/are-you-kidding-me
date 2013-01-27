@@ -9,11 +9,14 @@ public class Popup : MonoBehaviour {
 	public AudioClip heartBeat;
 	
 	public GameObject Fire; 
+	
+	private LevelBuilder levelBuilder;
+	
 	// Use this for initialization
 	void Awake () {	
 		popupForce = 1000;
 		falloffDistance = 100;
-		
+		levelBuilder = GameObject.Find("LevelBuilder").GetComponent<LevelBuilder>();
 	}
 	
 	// Update is called once per frame
@@ -31,9 +34,6 @@ public class Popup : MonoBehaviour {
 	}
 */
 	void OnTriggerEnter(Collider other) {		
-		Vector3 test_ray;
-		LayerMask layerMask;
-		
 		// Don't collide with other pillars.
 		if (other.gameObject.tag == "Pillar") {			
 			Debug.Log("Hit pillar?");
@@ -41,9 +41,9 @@ public class Popup : MonoBehaviour {
 		}
 		
 		// Don't propagate through walls.
-		//if (wallBetween(other.transform.position, this.rigidbody.position)) {
-		//	return;
-		//}
+		if (wallBetween(other.transform.position, this.rigidbody.position)) {
+			return;
+		}
 		
 		// Pillar movement looks better if wave force only acts on resting or rising pillars.
 		if (this.rigidbody.velocity.y < 0) {
@@ -57,21 +57,37 @@ public class Popup : MonoBehaviour {
 
 	
 	void OnMouseDown() {		
-		GameObject newFire = (GameObject) GameObject.Instantiate(Fire, new Vector3(transform.position.x, -7, transform.position.z), transform.rotation);
-		newFire.transform.Rotate(-90,0,0);
-		audio.PlayOneShot(heartBeat);
-		
-
+		fireAt(transform.position);
 	}
 	
-	Vector3 xzPlane(Vector3 vector) {
-		return new Vector3(vector.x, 0, vector.y);
+	void fireAt(Vector3 pos) {
+		GameObject.Instantiate(Fire, vectAtElevation(pos, LevelBuilder.FIRE_ELEVATION), Quaternion.identity);
+		audio.PlayOneShot(heartBeat);
+	}
+	
+	Vector3 vectAtElevation(Vector3 vector, float elevation) {
+		return new Vector3(vector.x, elevation, vector.z);
 	}
 
 	bool wallBetween(Vector3 vect1, Vector3 vect2) {
-		Vector3 test_ray = xzPlane(vect2) - xzPlane(vect1);
-		int layerMask = LayerMask.NameToLayer("Wall");
-		return Physics.Raycast(vect1, test_ray, test_ray.sqrMagnitude, layerMask);
+		Debug.DrawRay(vect1, Vector3.up * 10f, Color.magenta, 3.0f);
+		Debug.DrawRay(vect2, Vector3.up * 10f, Color.cyan, 3.0f);
+			
+		float wall_elev = LevelBuilder.WALL_ELEVATION - 3.75f;
+		Vector3 origin = vectAtElevation(vect1, wall_elev);
+		Vector3 dir = vectAtElevation(vect2, wall_elev) - origin;
+		int layerMask = 1 << LayerMask.NameToLayer("Wall");
+		
+		RaycastHit my_hit;
+		
+		Debug.DrawRay(origin, dir, Color.blue, 3.0f);
+		if (Physics.Raycast(origin, dir, out my_hit, dir.magnitude)) {
+			Color color = my_hit.collider.gameObject.layer != 0 ? Color.red : Color.gray;
+			Debug.DrawRay(my_hit.collider.gameObject.transform.position, Vector3.up * 10f, color, 3.0f);
+			Debug.Log ("Layer: " + my_hit.collider.gameObject.layer);
+		}
+		
+		return Physics.Raycast(origin, dir, dir.magnitude, layerMask);
 	}
 
 }
