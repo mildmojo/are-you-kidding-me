@@ -13,6 +13,9 @@ public class LevelBuilder : MonoBehaviour {
 	public GUIText text;
 	public ParticleSystem particles;
 	public Light exitLight;
+
+	[HideInInspector]
+	public Vector3 levelDimensions;
 	
 	private IList allLevels;
 	
@@ -171,6 +174,8 @@ public class LevelBuilder : MonoBehaviour {
 	//	}
 			
 		level = (int [,]) allLevels[currentLevel];
+		levelDimensions = new Vector3(level.GetLength(0), 0, level.GetLength(1));
+		
 		for (int i = 0; i < 20;i++) {
 			for (int j = 0; j < 20; j++) {		
 				if (level[i,j] == 1) {					
