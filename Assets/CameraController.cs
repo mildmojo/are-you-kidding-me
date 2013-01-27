@@ -16,6 +16,12 @@ public class CameraController : MonoBehaviour {
 	private const float MIN_DISTANCE    = 30f;
 	private const float MAX_DISTANCE    = Mathf.Infinity;
 	
+	void Start () {
+		if (QualitySettings.GetQualityLevel() < 2) {
+			this.camera.GetComponent<DepthOfFieldScatter>().enabled = false;
+		}
+	}
+	
 	// Update is called once per frame
 	void Update () {
 		if (ball && exit) {
