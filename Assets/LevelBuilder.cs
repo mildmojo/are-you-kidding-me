@@ -9,6 +9,7 @@ public class LevelBuilder : MonoBehaviour {
 	public GameObject Ball;
 	public GameObject Wall;
 	public GameObject InvisibleWall;
+	public GameObject WallTall;
 	public GameObject Tube;
 	public GUIText text;
 	public ParticleSystem particles;
@@ -72,12 +73,35 @@ public class LevelBuilder : MonoBehaviour {
 		 * 2 pointy
 		 * 3 wall
 		 * 4 superspring
+		 * 6 super wall
 		 * 7 invisible wall
 		 * 8 Start
 		 * 9 exit
 		 */
 		
-		//
+		// 7
+		allLevels.Add ( new 
+					int [,] {	{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
+								{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{3,1,1,1,1,1,6,6,6,6,6,6,6,6,1,1,1,1,1,3},
+								{3,1,1,1,1,1,6,0,0,0,0,0,0,6,1,1,1,1,1,3},
+								{3,1,1,1,1,1,6,0,0,0,0,0,0,6,1,1,1,1,1,3},	
+								{3,1,1,8,1,1,6,0,0,0,0,0,0,6,1,1,1,1,1,3},
+								{3,1,1,1,1,1,6,0,0,0,0,0,0,6,1,1,1,1,1,3},
+								{3,1,1,1,1,1,6,0,0,0,0,0,0,6,1,1,1,1,1,3},
+								{3,1,1,1,1,1,6,0,0,0,0,0,0,6,1,1,1,1,1,3},
+								{3,1,1,1,1,1,6,6,6,6,6,6,6,6,1,1,1,1,1,3},
+								{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},	
+								{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,9}}	);	
+		//5
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3,3},
 								{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,3},
@@ -99,6 +123,7 @@ public class LevelBuilder : MonoBehaviour {
 								{3,1,1,1,1,1,3,1,1,1,1,0,0,0,0,0,0,0,0,0},
 								{3,1,1,1,1,1,3,3,3,3,3,0,0,0,0,0,0,0,0,0},	
 								{3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0}}	);		
+		//6
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1},
 								{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,8,1},
@@ -247,6 +272,9 @@ public class LevelBuilder : MonoBehaviour {
 				} else if (level[i,j] == 7) {
 					GameObject newInvisibleWall = (GameObject) GameObject.Instantiate(InvisibleWall, new Vector3(i*2.1f, 0, j*2.1f), Quaternion.identity);
 					newInvisibleWall.transform.Rotate(-90,0,0);
+				} else if (level[i,j] == 6) {
+					GameObject newWallTall = (GameObject) GameObject.Instantiate(WallTall, new Vector3(i*2.1f, -4, j*2.1f), Quaternion.identity);
+					newWallTall.transform.Rotate(-90,0,0);
 				}
 			}
 		}
