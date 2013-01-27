@@ -15,9 +15,9 @@ public class ScaleEvent : MonoBehaviour {
 			dieAtSize = levelBuilder.levelDimensions.z;
 		}
 		// Scale factor from world coordinates to localScale units.
-		dieAtSize *= 7f;
-		//dieAtSize = 1000;
-		propogationSpeed = 50.0f;
+		//dieAtSize *= 7f;
+		dieAtSize = 1000;
+		propogationSpeed = 25.0f;
 	
 	}
 	

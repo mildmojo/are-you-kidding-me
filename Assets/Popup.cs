@@ -14,7 +14,7 @@ public class Popup : MonoBehaviour {
 	
 	// Use this for initialization
 	void Awake () {	
-		popupForce = 30;
+		popupForce = 400;
 		falloffDistance = 100;
 		levelBuilder = GameObject.Find("LevelBuilder").GetComponent<LevelBuilder>();
 	}
@@ -41,9 +41,9 @@ public class Popup : MonoBehaviour {
 		}
 		
 		// Don't propagate through walls.
-		if (wallBetween(other.transform.position, this.rigidbody.position)) {
-			return;
-		}
+		//if (wallBetween(other.transform.position, this.rigidbody.position)) {
+		//	return;
+		//}
 		
 		// Pillar movement looks better if wave force only acts on resting or rising pillars.
 		if (this.rigidbody.velocity.y < 0) {
