@@ -362,16 +362,23 @@ public class LevelBuilder : MonoBehaviour {
 	
 	}
 	
-	public void incrementLevel() {
+	public void goToNextLevel() {
+		incrementLevel();
+		if (true) {
+		//		if (currentLevel == numLevels) {
+			Debug.Log("Loading Credits.");	
+			Application.LoadLevel("Credits");
+		//	this.transform.parent.gameObject.SetActive(false);
+
+			Destroy(this);
+		} else {
+			Application.LoadLevel (Application.loadedLevel);
+		}
+	}
+	
+	private void incrementLevel() {
 		this.currentLevel += 1;
 		Debug.Log ("Incremementing currentLevel " + currentLevel + " and numLevels = " + numLevels );
-		if (currentLevel == numLevels) {
-			Debug.Log("Loading Credits.");	
-	//		Application.LoadLevel("Credits");
-		//	this.transform.parent.gameObject.SetActive(false);
-			
-			//Destroy(this);
-		}
 		Debug.Log("Current Level is " + currentLevel + " " + this.gameObject.GetInstanceID());
 	}
 	public int getCurrentLevel() {
