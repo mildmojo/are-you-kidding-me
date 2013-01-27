@@ -15,6 +15,11 @@ public class LevelBuilder : MonoBehaviour {
 	public ParticleSystem particles;
 	public Light exitLight;
 
+	public const float FIRE_ELEVATION = -7f;
+	public const float BALL_ELEVATION = 0f;
+	public const float PILLAR_ELEVATION = -10f;
+	public const float WALL_ELEVATION = 0f;
+	
 	[HideInInspector]
 	public Vector3 levelDimensions;
 	
