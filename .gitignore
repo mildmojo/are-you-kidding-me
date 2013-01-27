@@ -1,5 +1,5 @@
 .DS_Store
-Library
+Library/*
 [Oo]bj/
 Temp
 *.unityproj
