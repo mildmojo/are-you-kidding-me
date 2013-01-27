@@ -1,10 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class Popup : MonoBehaviour {
 	
 	private int popupForce; 
 	private int falloffDistance;
+	public AudioClip heartBeat;
 	
 	public GameObject Fire; 
 	// Use this for initialization
@@ -57,6 +59,8 @@ public class Popup : MonoBehaviour {
 	void OnMouseDown() {		
 		GameObject newFire = (GameObject) GameObject.Instantiate(Fire, new Vector3(transform.position.x, -7, transform.position.z), transform.rotation);
 		newFire.transform.Rotate(-90,0,0);
+		audio.PlayOneShot(heartBeat);
+		
 
 	}
 	
