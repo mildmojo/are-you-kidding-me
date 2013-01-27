@@ -8,7 +8,7 @@ public class ScaleEvent : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		LevelBuilder levelBuilder = GameObject.Find("LevelBuilder").GetComponent<LevelBuilder>();;
+		LevelBuilder levelBuilder = GameObject.Find("LevelBuilder").GetComponent<LevelBuilder>();
 		if (levelBuilder.levelDimensions.x > levelBuilder.levelDimensions.z) {
 			dieAtSize = levelBuilder.levelDimensions.x;
 		} else {
