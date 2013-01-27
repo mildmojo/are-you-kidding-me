@@ -4,7 +4,11 @@ using System.Collections;
 public class CameraController : MonoBehaviour {
 	
 	private LevelBuilder levelBuilder;
+	
+	[HideInInspector]
 	public GameObject ball;
+	
+	[HideInInspector]
 	public GameObject exit;
 	
 	private const float CAMERA_ANGLE    = 35f;
