@@ -8,7 +8,15 @@ public class ScaleEvent : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		dieAtSize = 1000;
+		LevelBuilder levelBuilder = GameObject.Find("LevelBuilder").GetComponent<LevelBuilder>();;
+		if (levelBuilder.levelDimensions.x > levelBuilder.levelDimensions.z) {
+			dieAtSize = levelBuilder.levelDimensions.x;
+		} else {
+			dieAtSize = levelBuilder.levelDimensions.z;
+		}
+		// Scale factor from world coordinates to localScale units.
+		dieAtSize *= 7f;
+		//dieAtSize = 1000;
 		propogationSpeed = 50.0f;
 	
 	}
