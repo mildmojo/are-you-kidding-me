@@ -6,7 +6,7 @@ public class CameraClick : MonoBehaviour {
 	public GameObject Fire;
 	RaycastHit hit;
 	int layerMask;
-	public AudioClip heartbeat;
+	public AudioClip Heartbeat;
 	// Use this for initialization
 	void Start () {
 	
@@ -21,7 +21,7 @@ public class CameraClick : MonoBehaviour {
 					GameObject pillar = hit.collider.gameObject;
 					GameObject newFire = (GameObject) GameObject.Instantiate(Fire, new Vector3(pillar.transform.position.x, -7, pillar.transform.position.z), pillar.transform.rotation);
 					newFire.transform.Rotate(-90,0,0);
-					audio.PlayOneShot(heartbeat);
+					audio.PlayOneShot(Heartbeat);
 				}
 				Debug.Log("Hit on " + hit.collider.gameObject.name);
 			}
