@@ -3,7 +3,9 @@ using System.Collections;
 
 
 public class LevelBuilder : MonoBehaviour {		
-		
+	
+	public static LevelBuilder instance;
+	
 	public GameObject Pillar;
 	public GameObject Exit;
 	public GameObject Ball;
@@ -23,6 +25,7 @@ public class LevelBuilder : MonoBehaviour {
 	[HideInInspector]
 	public Vector3 levelDimensions;
 	
+	private IList levelNames;
 	private IList allLevels;
 	
 	private int[,]level;	
@@ -38,6 +41,7 @@ public class LevelBuilder : MonoBehaviour {
 		if (!created) {
 			Debug.Log ("Create new levelbuilder" + " " + this.gameObject.GetInstanceID());
 			DontDestroyOnLoad(this.gameObject);
+			LevelBuilder.instance = this;
 			created = true;
 		}
 		else {
@@ -49,12 +53,11 @@ public class LevelBuilder : MonoBehaviour {
 	
 	void Start () {		
 		
-		cameraController = Camera.mainCamera.GetComponent<CameraController>();
-		
 		Debug.Log ("Level Builder Start() from object " + this.gameObject.GetInstanceID());
 		if (currentLevel == 0) {
 		  Debug.Log("Building because level zero actually is " + currentLevel);
-		  BuildLevel();
+			initLevels();
+			BuildLevel();
 		}
 		
 	}
@@ -65,15 +68,8 @@ public class LevelBuilder : MonoBehaviour {
 		BuildLevel();
 	}
 	
-	void BuildLevel() {		
-		
-	//	text.text = "Level " + (currentLevel + 1);
-				
-		Debug.Log ("Build Level was loaded current level is " + currentLevel + " " + this.gameObject.GetInstanceID());
-	
-		
-		
-		
+	void initLevels() {
+		levelNames = new ArrayList();
 		allLevels = new ArrayList();
 		
 		/* 0 no square
@@ -88,6 +84,7 @@ public class LevelBuilder : MonoBehaviour {
 		 */	
 		
 		// 1
+		levelNames.Add("Easy Does It");
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,3,3,3,3,3},
 								{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
@@ -110,6 +107,7 @@ public class LevelBuilder : MonoBehaviour {
 								{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},	
 								{3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3}}	);	
 		//2
+		levelNames.Add("On the Importance of General Relativity");
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,3,1,1,1,1,1,1,1,1,3,3,3,3,3,3},
 								{0,0,0,0,0,3,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
@@ -132,6 +130,7 @@ public class LevelBuilder : MonoBehaviour {
 								{3,1,1,1,1,1,1,1,1,1,1,1,7,7,7,1,1,1,1,3},	
 								{3,3,3,1,1,3,3,3,3,3,3,3,0,0,0,1,1,1,1,3}}	);	
 		//3
+		levelNames.Add("Rome Wasn't Burned in a Day");
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,3,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
 								{0,0,0,0,0,3,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
@@ -154,6 +153,7 @@ public class LevelBuilder : MonoBehaviour {
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},	
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3}}	);
 		//4
+		levelNames.Add("One In to Win");
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,1,1,1,3,3,3,3,1,1,1,1,1,1,1,1},
 								{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -177,6 +177,7 @@ public class LevelBuilder : MonoBehaviour {
 								{1,1,1,1,1,1,1,1,3,3,3,3,1,1,1,1,1,1,1,1}}	);	
 		
 		//5
+		levelNames.Add("Washington Minding the Gap");
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3,3},
 								{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,3},
@@ -200,6 +201,7 @@ public class LevelBuilder : MonoBehaviour {
 								{3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0}}	);		
 		
 		//6
+		levelNames.Add("Human Heart Simulation - Hyper-realistic Mode");
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1},
 								{0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,8,1},
@@ -223,6 +225,7 @@ public class LevelBuilder : MonoBehaviour {
 								{1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0}}	);		
 		
 		// 7
+		levelNames.Add("Horse");
 		allLevels.Add ( new 
 					int [,] {	{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
 								{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
@@ -245,12 +248,17 @@ public class LevelBuilder : MonoBehaviour {
 								{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},	
 								{3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,9}}	);	
 		
-	//	allLevels.Add(level1);
-	
-		
-		
-		
 		numLevels = allLevels.Count;
+	}
+	
+	void BuildLevel() {		
+				
+		Debug.Log ("Build Level was loaded current level is " + currentLevel + " " + this.gameObject.GetInstanceID());
+	
+		//text.text = "Level " + (currentLevel + 1);
+		
+		
+		
 		Debug.Log("Loading level " + currentLevel);
 		// Check for game over
 	//	if ((currentLevel + 1) > numLevels) {
@@ -260,6 +268,9 @@ public class LevelBuilder : MonoBehaviour {
 			
 		level = (int [,]) allLevels[currentLevel];
 		levelDimensions = new Vector3(level.GetLength(0), 0, level.GetLength(1));
+		
+		cameraController = Camera.mainCamera.GetComponent<CameraController>();
+		
 		
 		for (int i = 0; i < 20;i++) {
 			for (int j = 0; j < 20; j++) {		
@@ -300,6 +311,9 @@ public class LevelBuilder : MonoBehaviour {
 	}
 	public int getCurrentLevel() {
 		return currentLevel;
+	}
+	public string getLevelName(int levelNumber) {
+		return (string) levelNames[levelNumber];
 	}
 	// Update is called once per frame
 	void Update () {
