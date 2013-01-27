@@ -10,10 +10,12 @@ public class LevelReader : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (this.guiText.text == "Level") {
-			int level = LevelBuilder.instance.getCurrentLevel();
-			string name = LevelBuilder.instance.getLevelName(level);
-			this.guiText.text = "Level " + (level + 1) + ": " + name;
+		if (LevelBuilder.instance != null) {
+			if (this.guiText.text == "Level") {
+				int level = LevelBuilder.instance.getCurrentLevel();
+				string name = LevelBuilder.instance.getLevelName(level);
+				this.guiText.text = "Level " + (level + 1) + ": " + name;
+			}
 		}
 	}
 }

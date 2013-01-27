@@ -312,7 +312,6 @@ public class LevelBuilder : MonoBehaviour {
 		
 				
 		
-		
 		numLevels = allLevels.Count;
 	}
 	
