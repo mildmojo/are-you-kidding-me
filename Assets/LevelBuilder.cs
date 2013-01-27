@@ -20,12 +20,13 @@ public class LevelBuilder : MonoBehaviour {
 	private IList allLevels;
 	
 	private int[,]level;	
-	private int currentLevel;
+	private int currentLevel = 0;
 	private int numLevels;
 	
 	private static bool created = false;
 	
 	void Awake() {
+		
 		if (!created) {
 			Debug.Log ("Create new levelbuilder" + " " + this.gameObject.GetInstanceID());
 			DontDestroyOnLoad(this.gameObject);
@@ -39,6 +40,7 @@ public class LevelBuilder : MonoBehaviour {
 	}
 	
 	void Start () {		
+		
 		
 		Debug.Log ("Level Builder Start() from object " + this.gameObject.GetInstanceID());
 		if (currentLevel == 0) {
@@ -61,8 +63,7 @@ public class LevelBuilder : MonoBehaviour {
 		Debug.Log ("Build Level was loaded current level is " + currentLevel + " " + this.gameObject.GetInstanceID());
 	
 		
-		if (currentLevel == null )
-			currentLevel = 0;
+		
 		
 		allLevels = new ArrayList();
 		
@@ -159,7 +160,28 @@ public class LevelBuilder : MonoBehaviour {
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,8,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3},	
-								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3}}	);		
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,3}}	);	
+		allLevels.Add ( new 
+					int [,] {	{0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,1,1,1,1,3},
+								{0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,1,1,1,8,3},
+								{0,0,9,0,0,3,0,0,0,0,0,0,0,0,0,1,1,1,1,3},
+								{0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,1,1,1,1,3},
+								{0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,1,1,1,1,3},
+								{0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+								{0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+								{0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+								{0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3},	
+								{0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+								{0,0,0,0,0,3,0,0,0,8,0,0,0,0,0,0,0,0,0,3},
+								{0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+								{0,0,0,0,0,3,3,3,3,3,3,3,3,0,0,0,0,0,0,3},
+								{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+								{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},	
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3}}	);		
 	//	allLevels.Add(level1);
 	
 		
