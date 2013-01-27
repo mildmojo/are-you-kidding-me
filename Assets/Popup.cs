@@ -69,22 +69,22 @@ public class Popup : MonoBehaviour {
 	}
 
 	bool wallBetween(Vector3 vect1, Vector3 vect2) {
-		Debug.DrawRay(vect1, Vector3.up * 10f, Color.magenta, 3.0f);
-		Debug.DrawRay(vect2, Vector3.up * 10f, Color.cyan, 3.0f);
+//		Debug.DrawRay(vect1, Vector3.up * 10f, Color.magenta, 3.0f);
+//		Debug.DrawRay(vect2, Vector3.up * 10f, Color.cyan, 3.0f);
 			
 		float wall_elev = LevelBuilder.WALL_ELEVATION - 3.75f;
 		Vector3 origin = vectAtElevation(vect1, wall_elev);
 		Vector3 dir = vectAtElevation(vect2, wall_elev) - origin;
 		int layerMask = 1 << LayerMask.NameToLayer("Wall");
 		
-		RaycastHit my_hit;
+//		RaycastHit my_hit;
 		
-		Debug.DrawRay(origin, dir, Color.blue, 3.0f);
-		if (Physics.Raycast(origin, dir, out my_hit, dir.magnitude)) {
-			Color color = my_hit.collider.gameObject.layer != 0 ? Color.red : Color.gray;
-			Debug.DrawRay(my_hit.collider.gameObject.transform.position, Vector3.up * 10f, color, 3.0f);
-			Debug.Log ("Layer: " + my_hit.collider.gameObject.layer);
-		}
+//		Debug.DrawRay(origin, dir, Color.blue, 3.0f);
+//		if (Physics.Raycast(origin, dir, out my_hit, dir.magnitude)) {
+//			Color color = my_hit.collider.gameObject.layer != 0 ? Color.red : Color.gray;
+//			Debug.DrawRay(my_hit.collider.gameObject.transform.position, Vector3.up * 10f, color, 3.0f);
+//			Debug.Log ("Layer: " + my_hit.collider.gameObject.layer);
+//		}
 		
 		return Physics.Raycast(origin, dir, dir.magnitude, layerMask);
 	}
