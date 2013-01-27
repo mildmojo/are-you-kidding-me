@@ -28,10 +28,8 @@ public class BallActions : MonoBehaviour {
 	}
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.tag == "Exit") {
-			
 			Debug.Log ("Level Complete");
-			levelBuilder.incrementLevel();
-			Application.LoadLevel (Application.loadedLevel);
+			levelBuilder.goToNextLevel();
 		}
 	}
 }
