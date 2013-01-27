@@ -25,6 +25,9 @@ public class CameraClick : MonoBehaviour {
 			}
 			Debug.Log("clicked");
 		}
+		if (Input.GetKeyDown("escape")) {
+			Application.Quit();
+		}
 	}
 	
 	void OnMouseDown() {

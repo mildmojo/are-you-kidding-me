@@ -41,9 +41,9 @@ public class Popup : MonoBehaviour {
 		}
 		
 		// Don't propagate through walls.
-		//if (wallBetween(other.transform.position, this.rigidbody.position)) {
-		//	return;
-		//}
+		if (wallBetween(other.transform.position, this.rigidbody.position)) {
+			return;
+		}
 		
 		// Pillar movement looks better if wave force only acts on resting or rising pillars.
 		if (this.rigidbody.velocity.y < 0) {
