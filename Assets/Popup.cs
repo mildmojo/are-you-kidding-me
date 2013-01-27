@@ -14,7 +14,7 @@ public class Popup : MonoBehaviour {
 	
 	// Use this for initialization
 	void Awake () {	
-		popupForce = 1000;
+		popupForce = 30;
 		falloffDistance = 100;
 		levelBuilder = GameObject.Find("LevelBuilder").GetComponent<LevelBuilder>();
 	}
@@ -57,12 +57,7 @@ public class Popup : MonoBehaviour {
 
 	
 	void OnMouseDown() {		
-		fireAt(transform.position);
-	}
-	
-	void fireAt(Vector3 pos) {
-		GameObject.Instantiate(Fire, vectAtElevation(pos, LevelBuilder.FIRE_ELEVATION), Quaternion.identity);
-		audio.PlayOneShot(heartBeat);
+//		fireAt(transform.position);
 	}
 	
 	Vector3 vectAtElevation(Vector3 vector, float elevation) {
