@@ -32,6 +32,7 @@ public class LevelBuilder : MonoBehaviour {
 	private CameraController cameraController;
 	
 	private static bool created = false;
+	private static bool introLoaded = false;
 	
 	void Awake() {
 		
@@ -49,11 +50,10 @@ public class LevelBuilder : MonoBehaviour {
 	
 	void Start () {		
 		
-		cameraController = Camera.mainCamera.GetComponent<CameraController>();
+	//	cameraController = Camera.mainCamera.GetComponent<CameraController>();
 		
 		Debug.Log ("Level Builder Start() from object " + this.gameObject.GetInstanceID());
-		if (currentLevel == 0) {
-		  Debug.Log("Building because level zero actually is " + currentLevel);
+		if (currentLevel == 0) {		  
 		  BuildLevel();
 		}
 		
@@ -62,10 +62,18 @@ public class LevelBuilder : MonoBehaviour {
 	// Use this for initialization
 	void OnLevelWasLoaded () {
 		Debug.Log ("OnLevelLoaded sees currentLevel as " + currentLevel + " " + this.gameObject.GetInstanceID());
-		BuildLevel();
+		if (introLoaded == false) {
+			introLoaded = true;
+		} else {
+			BuildLevel();
+		}
 	}
 	
 	void BuildLevel() {		
+		
+		
+		
+	//	cameraController = Camera.mainCamera.GetComponent<CameraController>();
 		
 	//	text.text = "Level " + (currentLevel + 1);
 				
@@ -157,8 +165,8 @@ public class LevelBuilder : MonoBehaviour {
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,1,1,1,3,3,3,3,1,1,1,1,1,1,1,1},
 								{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-								{0,0,9,0,0,1,1,1,1,1,1,1,1,8,1,1,1,1,1,1},
-								{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+								{0,0,9,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+								{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,8,1,1,1},
 								{0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 								{1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -170,8 +178,8 @@ public class LevelBuilder : MonoBehaviour {
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,8,1,1,1,1},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-								{1,1,1,1,8,1,1,1,1,1,1,1,1,1,1,1,8,1,1,1},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},	
 								{1,1,1,1,1,1,1,1,3,3,3,3,1,1,1,1,1,1,1,1}}	);	
@@ -253,10 +261,11 @@ public class LevelBuilder : MonoBehaviour {
 		numLevels = allLevels.Count;
 		Debug.Log("Loading level " + currentLevel);
 		// Check for game over
-	//	if ((currentLevel + 1) > numLevels) {
-	//		Debug.Log("Loading Credits.");
-	//		Application.LoadLevel("Credits");
-	//	}
+		Debug.Log ("Current level is " + currentLevel + " number of levels is " + numLevels);
+		if (currentLevel == numLevels) {
+			Debug.Log("Loading Credits.");
+			Application.LoadLevel("Credits");
+		}
 			
 		level = (int [,]) allLevels[currentLevel];
 		levelDimensions = new Vector3(level.GetLength(0), 0, level.GetLength(1));
@@ -268,7 +277,7 @@ public class LevelBuilder : MonoBehaviour {
 					newPillar.transform.Rotate(-90,0,0);
 				} else if (level[i,j] == 9) {
 					GameObject newExit = (GameObject) GameObject.Instantiate(Exit, new Vector3(i, -10, j), Quaternion.identity);
-					cameraController.exit = newExit;
+				//	cameraController.exit = newExit;
 					newExit.transform.Rotate(-90,0,0);
 					//GameObject newTube = (GameObject) GameObject.Instantiate(Tube, new Vector3(i, 5, j), Quaternion.identity);
 					//newTube.transform.Rotate(-90,0,0);
@@ -279,7 +288,7 @@ public class LevelBuilder : MonoBehaviour {
 					newWall.transform.Rotate(-90,0,0);
 				} else if (level[i,j] == 8) {
 					GameObject newBall = (GameObject) GameObject.Instantiate(Ball, new Vector3(i*2.1f, 0, j*2.1f), Quaternion.identity);
-					cameraController.ball = newBall;
+//					cameraController.ball = newBall;
 					GameObject newPillar = (GameObject) GameObject.Instantiate(Pillar, new Vector3(i*2.1f, -10, j*2.1f), Quaternion.identity);
 					newPillar.transform.Rotate(-90,0,0);					
 				} else if (level[i,j] == 7) {

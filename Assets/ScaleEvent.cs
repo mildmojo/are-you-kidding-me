@@ -17,7 +17,7 @@ public class ScaleEvent : MonoBehaviour {
 		// Scale factor from world coordinates to localScale units.
 		//dieAtSize *= 7f;
 		dieAtSize = 1000;
-		propogationSpeed = 25.0f;
+		propogationSpeed = 20.0f;
 	
 	}
 	
