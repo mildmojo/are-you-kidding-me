@@ -9,13 +9,13 @@ public class ScaleEvent : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		dieAtSize = 1000;
-		propogationSpeed = 1.0f;
+		propogationSpeed = 50.0f;
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		this.gameObject.transform.localScale += new Vector3(propogationSpeed,0,propogationSpeed);
+		this.gameObject.transform.localScale += new Vector3(propogationSpeed * Time.deltaTime,0,propogationSpeed * Time.deltaTime);
 		if (this.gameObject.transform.localScale.x > dieAtSize)
 			Destroy(this.gameObject);
 	
