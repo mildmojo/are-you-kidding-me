@@ -29,6 +29,8 @@ public class LevelBuilder : MonoBehaviour {
 	private int currentLevel = 0;
 	private int numLevels;
 	
+	private CameraController cameraController;
+	
 	private static bool created = false;
 	
 	void Awake() {
@@ -47,6 +49,7 @@ public class LevelBuilder : MonoBehaviour {
 	
 	void Start () {		
 		
+		cameraController = Camera.mainCamera.GetComponent<CameraController>();
 		
 		Debug.Log ("Level Builder Start() from object " + this.gameObject.GetInstanceID());
 		if (currentLevel == 0) {
@@ -262,6 +265,7 @@ public class LevelBuilder : MonoBehaviour {
 					newPillar.transform.Rotate(-90,0,0);
 				} else if (level[i,j] == 9) {
 					GameObject newExit = (GameObject) GameObject.Instantiate(Exit, new Vector3(i, -10, j), Quaternion.identity);
+					cameraController.exit = newExit;
 					newExit.transform.Rotate(-90,0,0);
 					//GameObject newTube = (GameObject) GameObject.Instantiate(Tube, new Vector3(i, 5, j), Quaternion.identity);
 					//newTube.transform.Rotate(-90,0,0);
@@ -272,6 +276,7 @@ public class LevelBuilder : MonoBehaviour {
 					newWall.transform.Rotate(-90,0,0);
 				} else if (level[i,j] == 8) {
 					GameObject newBall = (GameObject) GameObject.Instantiate(Ball, new Vector3(i*2.1f, 0, j*2.1f), Quaternion.identity);
+					cameraController.ball = newBall;
 					GameObject newPillar = (GameObject) GameObject.Instantiate(Pillar, new Vector3(i*2.1f, -10, j*2.1f), Quaternion.identity);
 					newPillar.transform.Rotate(-90,0,0);					
 				} else if (level[i,j] == 7) {
