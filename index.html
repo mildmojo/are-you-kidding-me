@@ -17,23 +17,33 @@
 		</script>
 		<script type="text/javascript">
 		<!--
-		var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
-		if (document.location.protocol == 'https:')
-			unityObjectUrl = unityObjectUrl.replace("http://", "https://ssl-");
-		document.write('<script type="text\/javascript" src="' + unityObjectUrl + '"><\/script>');
+		$(function(){
+			$('#unityPlayer').hide();
+			$('#screenShot img').on('click', clickPlay);
+		});
+
+		function clickPlay(e) {
+			$('#screenShot').slideUp();
+			$('#unityPlayer').slideDown();
+			unityInit();
+		}
 		-->
 		</script>
 		<script type="text/javascript">
 		<!--
-			var config = {
-				width: 960,
-				height: 600,
-				params: { enableDebugging:"0" }
+			var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
+			if (document.location.protocol == 'https:')
+				unityObjectUrl = unityObjectUrl.replace("http://", "https://ssl-");
+			document.write('<script type="text\/javascript" src="' + unityObjectUrl + '"><\/script>');
 
-			};
-			var u = new UnityObject2(config);
+			function unityInit() {
+				var config = {
+					width: 960,
+					height: 600,
+					params: { enableDebugging:"0" }
 
-			jQuery(function() {
+				};
+				var u = new UnityObject2(config);
 
 				var $missingScreen = jQuery("#unityPlayer").find(".missing");
 				var $brokenScreen = jQuery("#unityPlayer").find(".broken");
@@ -68,7 +78,7 @@
 					}
 				});
 				u.initPlugin(jQuery("#unityPlayer")[0], "MeatMakesUsGo_Web_Plugin.unity3d");
-			});
+			}
 		-->
 		</script>
 		<style type="text/css">
@@ -128,6 +138,9 @@
 	</head>
 	<body>
 		<div class="content">
+			<div id="screenShot">
+				<img title="Click to Play!" src="click_to_play.png" width=800 height=600>
+			</div>
 			<div id="unityPlayer">
 				<div class="missing">
 					<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
