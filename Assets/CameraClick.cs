@@ -6,10 +6,10 @@ public class CameraClick : MonoBehaviour {
 	public GameObject Fire;
 	RaycastHit hit;
 	int layerMask;
-	public AudioClip Heartbeat;
+	public AudioClip Heartbeat;	
 	// Use this for initialization
-	void Start () {
-	
+	void Start () {		
+		
 	}
 	
 	// Update is called once per frame

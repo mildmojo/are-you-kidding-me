@@ -37,6 +37,8 @@ public class LevelBuilder : MonoBehaviour {
 	private static bool created = false;
 	private static bool introLoaded = false;
 	
+	public AudioClip music;
+	
 	void Awake() {
 		
 		if (!created) {
@@ -53,7 +55,7 @@ public class LevelBuilder : MonoBehaviour {
 	}
 	
 	void Start () {		
-		
+						
 		Debug.Log ("Level Builder Start() from object " + this.gameObject.GetInstanceID());
 		if (currentLevel == 0) {		  
 			initLevels();
