@@ -7,6 +7,11 @@ public class CameraClick : MonoBehaviour {
 	RaycastHit hit;
 	int layerMask;
 	public AudioClip Heartbeat;	
+	
+	private bool soundKeyDown;
+	
+	private const KeyCode SOUND_TOGGLE_KEY = KeyCode.S;
+	
 	// Use this for initialization
 	void Start () {		
 		
@@ -14,6 +19,13 @@ public class CameraClick : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (soundKeyDown) {
+			soundKeyDown = Input.GetKeyDown(SOUND_TOGGLE_KEY);
+		} else if (soundKeyDown = Input.GetKeyDown(KeyCode.S)) {
+			AudioListener listener = GetComponent<AudioListener>();
+			listener.enabled = !listener.enabled;
+		}
+			
 		if (Input.GetMouseButtonDown(0)) {
 			layerMask = 1 << LayerMask.NameToLayer("Pillar");
 			if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, layerMask)) {
