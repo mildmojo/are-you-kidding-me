@@ -40,9 +40,9 @@ public class LevelBuilder : MonoBehaviour {
 	public AudioClip music;
 	
 	void Awake() {
-		
 		if (!created) {
 			Debug.Log ("Create new levelbuilder" + " " + this.gameObject.GetInstanceID());
+			Screen.sleepTimeout = SleepTimeout.NeverSleep;
 			DontDestroyOnLoad(this.gameObject);
 			LevelBuilder.instance = this;
 			created = true;

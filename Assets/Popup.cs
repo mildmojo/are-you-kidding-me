@@ -1,28 +1,17 @@
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(AudioSource))]
 public class Popup : MonoBehaviour {
 	
 	private int popupForce; 
 	private int falloffDistance;
-	public AudioClip heartBeat;
 	
 	public GameObject Fire; 
-	
-	private LevelBuilder levelBuilder;
 	
 	// Use this for initialization
 	void Awake () {	
 		popupForce = 400;
 		falloffDistance = 100;
-		levelBuilder = GameObject.Find("LevelBuilder").GetComponent<LevelBuilder>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	
 	}
 	
 	/*void OnCollisionEnter(Collision other) {		
