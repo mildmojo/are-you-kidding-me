@@ -37,6 +37,9 @@ public class LevelBuilder : MonoBehaviour {
 	private static bool created = false;
 	private static bool introLoaded = false;
 	
+	private float gameStartedAt;
+	private float levelStartedAt;
+	
 	public AudioClip music;
 	
 	void Awake() {
@@ -45,6 +48,7 @@ public class LevelBuilder : MonoBehaviour {
 			Screen.sleepTimeout = SleepTimeout.NeverSleep;
 			DontDestroyOnLoad(this.gameObject);
 			LevelBuilder.instance = this;
+			gameStartedAt = Time.time;
 			created = true;
 		}
 		else {
@@ -60,6 +64,9 @@ public class LevelBuilder : MonoBehaviour {
 		if (currentLevel == 0) {		  
 			initLevels();
 			BuildLevel();
+			GA.init();
+			GA.instance.track("game_start");
+			GA.instance.track("level_" + currentLevel.ToString() + "_start", getLevelName(currentLevel));
 		}
 		
 	}
@@ -365,16 +372,21 @@ public class LevelBuilder : MonoBehaviour {
 	}
 	
 	public void goToNextLevel() {
+		GA.instance.track("level_" + currentLevel.ToString() + "_complete", getLevelName(currentLevel), elapsedLevel());
+		
 		incrementLevel();
 		
 		if (currentLevel == numLevels) {
 			Debug.Log("Loading Credits.");	
+			GA.instance.track("game_complete", "seconds_to_completion", elapsedGame());
 			Application.LoadLevel("Credits");
 		//	this.transform.parent.gameObject.SetActive(false);
 
 			Destroy(this);
 		} else {
 			Application.LoadLevel (Application.loadedLevel);
+			GA.instance.track("level_" + currentLevel.ToString() + "_start", getLevelName(currentLevel));
+			levelStartedAt = Time.time;
 		}
 	}
 	
@@ -390,8 +402,12 @@ public class LevelBuilder : MonoBehaviour {
 		Debug.Log ("Get level name " + levelNumber);
 		return (string) levelNames[levelNumber];
 	}
-	// Update is called once per frame
-	void Update () {
+
+	private int elapsedLevel() {
+		return (int) (Time.time - levelStartedAt);
+	}
 	
+	private int elapsedGame() {
+		return (int) (Time.time - gameStartedAt);
 	}
 }
