@@ -39,6 +39,7 @@ public class LevelBuilder : MonoBehaviour {
 	
 	private float gameStartedAt;
 	private float levelStartedAt;
+	private float lifeStartedAt;
 	
 	public AudioClip music;
 	
@@ -67,6 +68,8 @@ public class LevelBuilder : MonoBehaviour {
 			GA.init();
 			GA.instance.track("game_start");
 			GA.instance.track("level_" + currentLevel.ToString() + "_start", getLevelName(currentLevel));
+			levelStartedAt = Time.time;
+			lifeStartedAt = Time.time;
 		}
 		
 	}
@@ -371,6 +374,12 @@ public class LevelBuilder : MonoBehaviour {
 	
 	}
 	
+	public void playerDied() {
+		GA.instance.track("level_" + currentLevel.ToString() + "_death", "seconds_lived", elapsedLife());
+		Application.LoadLevel(Application.loadedLevel);
+		lifeStartedAt = Time.time;
+	}
+	
 	public void goToNextLevel() {
 		GA.instance.track("level_" + currentLevel.ToString() + "_complete", getLevelName(currentLevel), elapsedLevel());
 		
@@ -387,6 +396,7 @@ public class LevelBuilder : MonoBehaviour {
 			Application.LoadLevel (Application.loadedLevel);
 			GA.instance.track("level_" + currentLevel.ToString() + "_start", getLevelName(currentLevel));
 			levelStartedAt = Time.time;
+			lifeStartedAt = Time.time;
 		}
 	}
 	
@@ -395,19 +405,25 @@ public class LevelBuilder : MonoBehaviour {
 		Debug.Log ("Incremementing currentLevel " + currentLevel + " and numLevels = " + numLevels );
 		Debug.Log("Current Level is " + currentLevel + " " + this.gameObject.GetInstanceID());
 	}
+	
 	public int getCurrentLevel() {
 		return currentLevel;
 	}
+	
 	public string getLevelName(int levelNumber) {
 		Debug.Log ("Get level name " + levelNumber);
 		return (string) levelNames[levelNumber];
 	}
 
+	private int elapsedGame() {
+		return (int) (Time.time - gameStartedAt);
+	}
+	
 	private int elapsedLevel() {
 		return (int) (Time.time - levelStartedAt);
 	}
 	
-	private int elapsedGame() {
-		return (int) (Time.time - gameStartedAt);
+	private int elapsedLife() {
+		return (int) (Time.time - lifeStartedAt);
 	}
 }
