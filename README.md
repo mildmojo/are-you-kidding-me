@@ -12,8 +12,8 @@
 
 This game was made in 48 hours at @RunJumpDev's gathering for the 2013 [Global Game Jam](http://globalgamejam.org).
 
-Design, Lead Developer: @AlBakerKY
+Design, Lead Developer: [AlBakerKY](http://github.com/AlBakerKY)
 
-Additional programming: @mildmojo
+Additional programming: [@mildmojo](http://twitter.com/mildmojo)
 
 Sound: Mr. Mathieu Keith
