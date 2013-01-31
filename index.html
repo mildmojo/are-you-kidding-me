@@ -1,175 +1,185 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Meat Makes Us Go?</title>
-		<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
-		<script type="text/javascript">
-		  var _gaq = _gaq || [];
-		  _gaq.push(['_setAccount', 'UA-37965656-1']);
-		  _gaq.push(['_trackPageview']);
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Meat Makes Us Go?</title>
 
-		  (function() {
-		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		  })();
-		</script>
-		<script type="text/javascript">
-		<!--
-		$(function(){
-			$('#unityPlayer').hide();
-			$('#screenShot img').on('click', clickPlay);
-		});
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-37965656-1']);
+      _gaq.push(['_trackPageview']);
 
-		function clickPlay(e) {
-			$('#screenShot').slideUp();
-			$('#unityPlayer').slideDown();
-			unityInit();
-		}
-		-->
-		</script>
-		<script type="text/javascript">
-		<!--
-			var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
-			if (document.location.protocol == 'https:')
-				unityObjectUrl = unityObjectUrl.replace("http://", "https://ssl-");
-			document.write('<script type="text\/javascript" src="' + unityObjectUrl + '"><\/script>');
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
 
-			function unityInit() {
-				var config = {
-					width: 960,
-					height: 600,
-					params: { enableDebugging:"0" }
+    <script type="text/javascript">
+      <!--
+      $(function(){
+        $('#unityPlayer').hide();
+        $('#screenShot img').on('click', clickPlay);
+        $('a.download').on('click'), function(e) {
+          _gaq.push('_trackPageview', $(e.target).attr('href'));
+        });
+        $('a.contact').on('click'), function(e) {
+          _gaq.push('_trackEvent', 'AuthorClicks', $(e.target).text());
+        });
+      });
 
-				};
-				var u = new UnityObject2(config);
+      function clickPlay(e) {
+        $('#screenShot').slideUp();
+        $('#unityPlayer').slideDown();
+        unityInit();
+      }
+    -->
+    </script>
+    <script type="text/javascript">
+    <!--
+      var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
+      if (document.location.protocol == 'https:')
+        unityObjectUrl = unityObjectUrl.replace("http://", "https://ssl-");
+      document.write('<script type="text\/javascript" src="' + unityObjectUrl + '"><\/script>');
 
-				var $missingScreen = jQuery("#unityPlayer").find(".missing");
-				var $brokenScreen = jQuery("#unityPlayer").find(".broken");
-				$missingScreen.hide();
-				$brokenScreen.hide();
+      function unityInit() {
+        var config = {
+          width: 960,
+          height: 600,
+          params: { enableDebugging:"0" }
 
-				u.observeProgress(function (progress) {
-					switch(progress.pluginStatus) {
-						case "broken":
-							$brokenScreen.find("a").click(function (e) {
-								e.stopPropagation();
-								e.preventDefault();
-								u.installPlugin();
-								return false;
-							});
-							$brokenScreen.show();
-						break;
-						case "missing":
-							$missingScreen.find("a").click(function (e) {
-								e.stopPropagation();
-								e.preventDefault();
-								u.installPlugin();
-								return false;
-							});
-							$missingScreen.show();
-						break;
-						case "installed":
-							$missingScreen.remove();
-						break;
-						case "first":
-						break;
-					}
-				});
-				u.initPlugin(jQuery("#unityPlayer")[0], "MeatMakesUsGo_Web_Plugin.unity3d");
-			}
-		-->
-		</script>
-		<style type="text/css">
-		<!--
-		body {
-			font-family: Helvetica, Verdana, Arial, sans-serif;
-			background-color: black;
-			color: rgb(235, 220, 0);
-			text-align: center;
-		}
-		a:link, a:visited {
-			color: rgb(190, 140, 50);
-		}
-		a:active, a:hover {
-			color: rgb(190, 140, 90);
-		}
-		p.header {
-			font-size: small;
-		}
-		p.header span {
-			font-weight: bold;
-		}
-		p.footer {
-			font-size: x-small;
-		}
-		div.content {
-			margin: auto;
-			width: 960px;
-		}
-		div.broken,
-		div.missing {
-			margin: auto;
-			position: relative;
-			top: 50%;
-			width: 193px;
-		}
-		div.broken a,
-		div.missing a {
-			height: 63px;
-			position: relative;
-			top: -31px;
-		}
-		div.broken img,
-		div.missing img {
-			border-width: 0px;
-		}
-		div.broken {
-			display: none;
-		}
-		div#unityPlayer {
-			cursor: default;
-			height: 600px;
-			width: 960px;
-		}
-		-->
-		</style>
-	</head>
-	<body>
-		<div class="content">
-			<div id="screenShot">
-				<img title="Click to Play!" src="click_to_play.png" width=800 height=600>
-			</div>
-			<div id="unityPlayer">
-				<div class="missing">
-					<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
-						<img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
-					</a>
-				</div>
-				<div class="broken">
-					<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now! Restart your browser after install.">
-						<img alt="Unity Web Player. Install now! Restart your browser after install." src="http://webplayer.unity3d.com/installation/getunityrestart.png" width="193" height="63" />
-					</a>
-				</div>
-			</div>
-		</div>
+        };
+        var u = new UnityObject2(config);
 
-		<p>Download: <a href="mmug_linux-1.0">Linux</a> |
-		             <a href="mmug_mac-1.0.zip">Mac</a> |
-		             <a href="mmug_win-1.0.zip">Windows</a>
-		</p>
-		<p><strong>Meat Makes Us Go?</strong> A physics puzzler made in 48 hours for the
-			<a href="http://globalgamejam.org/2013/meat-makes-us-go">2013 Global Game Jam</a>.
-		</p>
-		<p>Click floor tiles to make waves that push the ball along. Multiple clicks produce intersecting waves that will accumulate and make taller waves. Leap over chasms, jump walls, and walk along perilous pathways.</p>
-		<p>Design and code by <a href="http://github.com/AlBakerKY">@AlBakerKY</a>.
-			Additional code by <a href="http://twitter.com/mildmojo">@mildmojo</a>.
-			Sound by Mr. Mathieu Keith. <a href="http://github.com/mildmojo/are-you-kidding-me">Code available.</a>
-		</p>
-		<p>
-			<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
-		</p>
-	</body>
+        var $missingScreen = jQuery("#unityPlayer").find(".missing");
+        var $brokenScreen = jQuery("#unityPlayer").find(".broken");
+        $missingScreen.hide();
+        $brokenScreen.hide();
+
+        u.observeProgress(function (progress) {
+          switch(progress.pluginStatus) {
+            case "broken":
+              $brokenScreen.find("a").click(function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                u.installPlugin();
+                return false;
+              });
+              $brokenScreen.show();
+            break;
+            case "missing":
+              $missingScreen.find("a").click(function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                u.installPlugin();
+                return false;
+              });
+              $missingScreen.show();
+            break;
+            case "installed":
+              $missingScreen.remove();
+            break;
+            case "first":
+            break;
+          }
+        });
+        u.initPlugin(jQuery("#unityPlayer")[0], "MeatMakesUsGo_Web_Plugin.unity3d");
+      }
+    -->
+    </script>
+    <style type="text/css">
+    <!--
+    body {
+      font-family: Helvetica, Verdana, Arial, sans-serif;
+      background-color: black;
+      color: rgb(235, 220, 0);
+      text-align: center;
+    }
+    a:link, a:visited {
+      color: rgb(190, 140, 50);
+    }
+    a:active, a:hover {
+      color: rgb(190, 140, 90);
+    }
+    p.header {
+      font-size: small;
+    }
+    p.header span {
+      font-weight: bold;
+    }
+    p.footer {
+      font-size: x-small;
+    }
+    div.content {
+      margin: auto;
+      width: 960px;
+    }
+    div.broken,
+    div.missing {
+      margin: auto;
+      position: relative;
+      top: 50%;
+      width: 193px;
+    }
+    div.broken a,
+    div.missing a {
+      height: 63px;
+      position: relative;
+      top: -31px;
+    }
+    div.broken img,
+    div.missing img {
+      border-width: 0px;
+    }
+    div.broken {
+      display: none;
+    }
+    div#unityPlayer {
+      cursor: default;
+      height: 600px;
+      width: 960px;
+    }
+    -->
+    </style>
+  </head>
+
+  <body>
+    <div class="content">
+      <div id="screenShot">
+        <img title="Click to Play!" src="click_to_play.png" width=800 height=600>
+      </div>
+      <div id="unityPlayer">
+        <div class="missing">
+          <a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
+            <img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
+          </a>
+        </div>
+        <div class="broken">
+          <a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now! Restart your browser after install.">
+            <img alt="Unity Web Player. Install now! Restart your browser after install." src="http://webplayer.unity3d.com/installation/getunityrestart.png" width="193" height="63" />
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <p>Download: <a class="download" href="/mmug_linux-1.0.zip">Linux</a> |
+                 <a class="download" href="/mmug_mac-1.0.zip">Mac</a> |
+                 <a class="download" href="/mmug_win-1.0.zip">Windows</a>
+    </p>
+    <p><strong>Meat Makes Us Go?</strong> A physics puzzler made in 48 hours for the
+      <a href="http://globalgamejam.org/2013/meat-makes-us-go">2013 Global Game Jam</a>
+      hosted by <a href="http://runjumpdev.com">Run Jump Dev</a> .
+    </p>
+    <p>Click floor tiles to make waves that push the ball along. Multiple clicks produce intersecting waves that will accumulate and make taller waves. Leap over chasms, jump walls, and walk along perilous pathways.</p>
+    <p>Design and code by <a class="contact" href="http://github.com/AlBakerKY">@AlBakerKY</a>.
+      Additional code by <a class="contact" href="http://twitter.com/mildmojo">@mildmojo</a>.
+      Sound by Mr. Mathieu Keith. <a href="http://github.com/mildmojo/are-you-kidding-me">Code available.</a>
+    </p>
+    <p>
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+    </p>
+  </body>
 
 </html>
