@@ -23,10 +23,10 @@
         $('#unityPlayer').hide();
         $('#screenShot img').on('click', clickPlay);
         $('a.download').on('click', function(e) {
-          _gaq.push('_trackPageview', $(e.target).attr('href'));
+          _gaq.push(['_trackPageview', $(e.target).attr('href')]);
         });
         $('a.contact').on('click', function(e) {
-          _gaq.push('_trackEvent', 'AuthorClicks', $(e.target).text());
+          _gaq.push(['_trackEvent', 'AuthorClicks', $(e.target).text()]);
         });
       });
 
