@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 
 public class LevelBuilder : MonoBehaviour {		
 	
@@ -35,22 +35,30 @@ public class LevelBuilder : MonoBehaviour {
 	private CameraController cameraController;
 	
 	private static bool created = false;
-	private static bool introLoaded = false;
+	private bool levelWasLoaded = false;
 	
-	private float gameStartedAt;
-	private float levelStartedAt;
-	private float lifeStartedAt;
+	private Dictionary<string,float> timerStarts = new Dictionary<string,float>() {
+		{"game", 0f},
+		{"level", 0f},
+		{"life", 0f}
+	};
+	private Dictionary<string,float> timerTotals = new Dictionary<string,float>() {
+		{"game", 0f},
+		{"level", 0f},
+		{"life", 0f}
+	};
+	private bool timersRunning = false;
 	
 	public AudioClip music;
 	
 	void Awake() {
 		if (!created) {
+			created = true;
 			Debug.Log ("Create new levelbuilder" + " " + this.gameObject.GetInstanceID());
 			Screen.sleepTimeout = SleepTimeout.NeverSleep;
 			DontDestroyOnLoad(this.gameObject);
 			LevelBuilder.instance = this;
-			gameStartedAt = Time.time;
-			created = true;
+			initLevels();
 		}
 		else {
 			Debug.Log("Bad level builder, bad!" + " " + this.gameObject.GetInstanceID());
@@ -59,38 +67,30 @@ public class LevelBuilder : MonoBehaviour {
 			
 	}
 	
-	void Start () {		
-						
-		Debug.Log ("Level Builder Start() from object " + this.gameObject.GetInstanceID());
-		if (currentLevel == 0) {		  
-			initLevels();
-			BuildLevel();
-			GA.init();
-			GA.instance.track("game_start");
-			GA.instance.track("level_" + currentLevel.ToString() + "_start", getLevelName(currentLevel));
-			levelStartedAt = Time.time;
-			lifeStartedAt = Time.time;
-		}
-		
-	}
-
 	// Use this for initialization
 	void OnLevelWasLoaded () {
+		levelWasLoaded = true;
 		if (Application.loadedLevelName == "Credits") {
 			DestroyImmediate(this);
 		}
 		Debug.Log ("OnLevelLoaded sees currentLevel as " + currentLevel + " " + this.gameObject.GetInstanceID());
-		if (currentLevel != 0 || introLoaded == true) {		
-			BuildLevel();
-		}
-		
-		if (introLoaded == false) {
-			introLoaded = true;
-			// BuildLevel();
-		}
-		
+		BuildLevel();
+
 	}
 	
+	void Start () {
+		// OnLevelWasLoaded isn't triggered when the scene containing a DontDestroyOnLoad
+		// object is started from the editor. Make sure it's called.
+		if (!levelWasLoaded) {
+			OnLevelWasLoaded();
+		}
+		Debug.Log ("Level Builder Start() from object " + this.gameObject.GetInstanceID());
+		GA.init();
+		GA.instance.track("game_start");
+		GA.instance.track("level_" + currentLevel.ToString() + "_start", getLevelName(currentLevel));
+		
+	}
+
 	void initLevels() {
 		levelNames = new ArrayList();
 		allLevels = new ArrayList();
@@ -106,7 +106,7 @@ public class LevelBuilder : MonoBehaviour {
 		 * 9 exit
 		 */	
 		
-		// 1
+		// 0
 		levelNames.Add("Easy Does It");
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,3,3,3,3,3},
@@ -130,8 +130,7 @@ public class LevelBuilder : MonoBehaviour {
 								{3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},	
 								{3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3}}	);	
 		
-		
-		//2
+		// 1
 		levelNames.Add("On the Importance of General Relativity");
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,3,1,1,1,1,1,1,1,1,3,3,3,3,3,3},
@@ -153,8 +152,9 @@ public class LevelBuilder : MonoBehaviour {
 								{3,1,1,1,1,1,1,1,1,1,1,1,7,1,1,1,1,1,1,3},
 								{3,1,1,1,1,1,1,1,1,1,1,1,7,1,1,1,1,1,1,3},
 								{3,1,1,1,1,1,1,1,1,1,1,1,7,7,7,1,1,1,1,3},	
-								{3,3,3,1,1,3,3,3,3,3,3,3,0,0,0,1,1,1,1,3}}	);	
-		//3
+								{3,3,3,1,1,3,3,3,3,3,3,3,7,7,7,1,1,1,1,3}}	);	
+		
+		// 2
 		levelNames.Add("Rome Wasn't Burned in a Day");
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,3,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
@@ -177,7 +177,8 @@ public class LevelBuilder : MonoBehaviour {
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3},	
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,3,3}}	);
-		//4
+		
+		// 3
 		levelNames.Add("One In to Win");
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,1,1,1,3,3,3,3,1,1,1,1,1,1,1,1},
@@ -201,31 +202,7 @@ public class LevelBuilder : MonoBehaviour {
 								{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},	
 								{1,1,1,1,1,1,1,1,3,3,3,3,1,1,1,1,1,1,1,1}}	);	
 		
-		//5
-		levelNames.Add("Washington Minding the Gap");
-		allLevels.Add ( new 
-					int [,] {	{0,0,0,0,0,7,7,7,7,7,7,7,7,7,3,3,3,3,3,3},
-								{0,0,0,0,0,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},
-								{0,0,9,0,0,7,7,7,7,7,7,7,7,7,1,1,1,8,1,3},
-								{0,0,0,0,0,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},
-								{0,0,0,0,0,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},
-								{0,0,0,0,0,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},
-								{0,1,1,7,7,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},
-								{0,1,1,0,7,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},
-								{3,1,1,7,7,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},	
-								{3,1,1,7,7,7,7,7,7,7,7,7,7,7,7,1,1,1,7,3},
-								{3,1,1,1,7,7,7,7,7,7,7,7,7,7,7,1,1,1,7,3},
-								{3,1,1,1,7,7,7,7,7,7,7,7,7,7,7,1,1,1,7,3},
-								{3,1,1,1,7,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},
-								{3,1,1,1,7,3,3,3,3,3,7,7,7,7,1,1,1,1,1,3},
-								{3,1,1,1,1,1,1,1,1,1,1,7,7,1,1,1,1,1,1,3},
-								{3,1,1,1,1,1,1,1,1,1,1,7,7,1,1,1,1,1,1,3},
-								{3,1,1,1,1,1,1,1,1,1,1,7,7,7,3,3,3,3,3,3},
-								{3,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0},
-								{3,1,1,1,1,1,3,3,3,3,3,0,0,0,0,0,0,0,0,0},	
-								{3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0}}	);		
-		
-		//6
+		// 4
 		levelNames.Add("Human Heart Simulation - Hyper-realistic Mode");
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,1,6,1,6,6,1,6,1,6,1,1,6,6,6,6},
@@ -249,7 +226,7 @@ public class LevelBuilder : MonoBehaviour {
 								{1,1,1,1,1,1,7,7,1,1,1,7,7,1,1,7,7,1,1,6},	
 								{6,6,1,6,1,1,6,1,6,1,6,1,6,1,6,0,6,6,6,6}}	);	
 		
-		//6
+		// 5
 		levelNames.Add("Kriss Kross");
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,7,7,7,7,7,6,6,6,6,6,6,6,6,1,6},
@@ -273,7 +250,7 @@ public class LevelBuilder : MonoBehaviour {
 								{6,1,1,1,6,1,1,1,6,1,1,1,1,1,1,1,1,1,6,6},	
 								{6,6,6,6,1,6,6,6,6,6,6,6,6,6,1,6,6,6,6,6}}	);		
 		
-		// 7
+		// 6
 		levelNames.Add("Horse");
 		allLevels.Add ( new 
 					int [,] {	{1,1,1,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6},
@@ -298,6 +275,30 @@ public class LevelBuilder : MonoBehaviour {
 								{6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,9}}	);	
 								
 		// 7
+		levelNames.Add("Washington Minding the Gap");
+		allLevels.Add ( new 
+					int [,] {	{0,0,0,0,0,7,7,7,7,7,7,7,7,7,3,3,3,3,3,3},
+								{0,0,0,0,0,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},
+								{0,0,9,0,0,7,7,7,7,7,7,7,7,7,1,1,1,8,1,3},
+								{0,0,0,0,0,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},
+								{0,0,0,0,0,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},
+								{0,0,0,0,0,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},
+								{0,1,1,7,7,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},
+								{0,1,1,0,7,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},
+								{3,1,1,7,7,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},	
+								{3,1,1,7,7,7,7,7,7,7,7,7,7,7,7,1,1,1,7,3},
+								{3,1,1,1,7,7,7,7,7,7,7,7,7,7,7,1,1,1,7,3},
+								{3,1,1,1,7,7,7,7,7,7,7,7,7,7,7,1,1,1,7,3},
+								{3,1,1,1,7,7,7,7,7,7,7,7,7,7,1,1,1,1,1,3},
+								{3,1,1,1,7,3,3,3,3,3,7,7,7,7,1,1,1,1,1,3},
+								{3,1,1,1,1,1,1,1,1,1,1,7,7,1,1,1,1,1,1,3},
+								{3,1,1,1,1,1,1,1,1,1,1,7,7,1,1,1,1,1,1,3},
+								{3,1,1,1,1,1,1,1,1,1,1,7,7,7,3,3,3,3,3,3},
+								{3,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0},
+								{3,1,1,1,1,1,3,3,3,3,3,0,0,0,0,0,0,0,0,0},	
+								{3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0}}	);		
+		
+		// 8
 		levelNames.Add("Follow the yellow brick road");
 		allLevels.Add ( new 
 					int [,] {	{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -375,19 +376,21 @@ public class LevelBuilder : MonoBehaviour {
 	}
 	
 	public void playerDied() {
-		GA.instance.track("level_" + currentLevel.ToString() + "_death", "seconds_lived", elapsedLife());
+		pauseTimers();
+		GA.instance.track("level_" + currentLevel.ToString() + "_death", "seconds_lived", elapsedTimer("life"));
 		Application.LoadLevel(Application.loadedLevel);
-		lifeStartedAt = Time.time;
+		resetTimer("life");
 	}
 	
 	public void goToNextLevel() {
-		GA.instance.track("level_" + currentLevel.ToString() + "_complete", getLevelName(currentLevel), elapsedLevel());
+		pauseTimers();
+		GA.instance.track("level_" + currentLevel.ToString() + "_complete", getLevelName(currentLevel), elapsedTimer("level"));
 		
 		incrementLevel();
 		
 		if (currentLevel == numLevels) {
 			Debug.Log("Loading Credits.");	
-			GA.instance.track("game_complete", "seconds_to_completion", elapsedGame());
+			GA.instance.track("game_complete", "seconds_to_completion", elapsedTimer("game"));
 			Application.LoadLevel("Credits");
 		//	this.transform.parent.gameObject.SetActive(false);
 
@@ -395,9 +398,10 @@ public class LevelBuilder : MonoBehaviour {
 		} else {
 			Application.LoadLevel (Application.loadedLevel);
 			GA.instance.track("level_" + currentLevel.ToString() + "_start", getLevelName(currentLevel));
-			levelStartedAt = Time.time;
-			lifeStartedAt = Time.time;
 		}
+
+		resetTimer("level");
+		resetTimer("life");
 	}
 	
 	private void incrementLevel() {
@@ -415,15 +419,34 @@ public class LevelBuilder : MonoBehaviour {
 		return (string) levelNames[levelNumber];
 	}
 
-	private int elapsedGame() {
-		return (int) (Time.time - gameStartedAt);
+	private int elapsedTimer(string timerName) {
+		return (int) timerTotals[timerName];
 	}
 	
-	private int elapsedLevel() {
-		return (int) (Time.time - levelStartedAt);
+	public void startTimers() {
+		if (!timersRunning) {
+			foreach (string timerName in keysToStrings(timerStarts)) {
+				timerStarts[timerName] = Time.time;
+			}
+			timersRunning = true;
+		}
 	}
 	
-	private int elapsedLife() {
-		return (int) (Time.time - lifeStartedAt);
+	public void pauseTimers() {
+		foreach (string timerName in keysToStrings(timerStarts)) {
+			timerTotals[timerName] += Time.time - timerStarts[timerName];
+		}
+		timersRunning = false;
 	}
+	
+	public void resetTimer(string timerName) {
+		timerTotals[timerName] = 0;
+	}
+
+	private string[] keysToStrings(Dictionary<string, float> dict) {
+		string[] keys = new string[dict.Keys.Count];
+		dict.Keys.CopyTo(keys, 0);
+		return keys;
+	}
+
 }
