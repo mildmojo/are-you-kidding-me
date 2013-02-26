@@ -5,9 +5,10 @@ public class LevelReader : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		// NOTE: THIS CLEARS LEVEL TEXT, TOTAL HACK FOR VIDEO
+		this.guiText.text = "";
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if (LevelBuilder.instance != null) {
