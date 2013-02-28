@@ -4,6 +4,8 @@ using System.Collections;
 public class CameraClick : MonoBehaviour {
 
 	public GameObject Fire;
+	public GameObject Fire2;
+
 	RaycastHit hit;
 	int layerMask;
 	public AudioClip Heartbeat;
@@ -39,12 +41,16 @@ public class CameraClick : MonoBehaviour {
 		}
 
 		if (Input.GetMouseButtonDown(0)) {
-			layerMask = 1 << LayerMask.NameToLayer("Pillar");
+			int pillarLayer = LayerMask.NameToLayer("Pillar");
+			int pillar2Layer = LayerMask.NameToLayer("Pillar2");
+			layerMask = 1 << pillarLayer;
+			layerMask += 1 << pillar2Layer;
 			if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, layerMask)) {
 				if (hit.collider.gameObject.tag == "Pillar") {
 					//LevelBuilder.instance.startTimers();
 					GameObject pillar = hit.collider.gameObject;
-					GameObject newFire = (GameObject) GameObject.Instantiate(Fire, new Vector3(pillar.transform.position.x, -7, pillar.transform.position.z), pillar.transform.rotation);
+					GameObject newFire = hit.collider.gameObject.layer == pillarLayer ? Fire : Fire2;
+					newFire = (GameObject) GameObject.Instantiate(newFire, new Vector3(pillar.transform.position.x, -7, pillar.transform.position.z), pillar.transform.rotation);
 					newFire.transform.Rotate(-90,0,0);
 					audio.PlayOneShot(Heartbeat);
 				}

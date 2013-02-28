@@ -22,7 +22,7 @@ public class Popup : MonoBehaviour {
 		}
 	}
 */
-	void OnTriggerEnter(Collider other) {
+	public void OnTriggerEnter(Collider other) {
 		// Don't collide with other pillars.
 		if (other.gameObject.tag == "Pillar") {
 			Debug.Log("Hit pillar?");
