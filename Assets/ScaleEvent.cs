@@ -3,8 +3,10 @@ using System.Collections;
 
 public class ScaleEvent : MonoBehaviour {
 
+	[HideInInspector]
+	public float? dieAtSize;
+
 	private float propogationSpeed;
-	private float dieAtSize;
 
 	// Use this for initialization
 	void Start () {
@@ -16,17 +18,18 @@ public class ScaleEvent : MonoBehaviour {
 		// }
 		// Scale factor from world coordinates to localScale units.
 		//dieAtSize *= 7f;
-		dieAtSize = 1000;
+		if (!dieAtSize.HasValue) {
+			dieAtSize = 1000;
+		}
 		propogationSpeed = 20.0f;
 
 	}
 
 	// Update is called once per frame
 	void Update () {
-		this.gameObject.transform.localScale += new Vector3(propogationSpeed * Time.deltaTime,0,propogationSpeed * Time.deltaTime);
 		if (this.gameObject.transform.localScale.x > dieAtSize)
 			Destroy(this.gameObject);
-
+		this.gameObject.transform.localScale += new Vector3(propogationSpeed * Time.deltaTime,0,propogationSpeed * Time.deltaTime);
 	}
 	/*
 	void OnCollisionEnter(Collision other) {

@@ -23,6 +23,8 @@ public class TriggerTimeline : MonoBehaviour {
         GameObject pillar = events[eventCounter].target;
         GameObject newFire = (GameObject) GameObject.Instantiate(FireTrigger, new Vector3(pillar.transform.position.x, -7, pillar.transform.position.z), pillar.transform.rotation);
         newFire.transform.Rotate(-90,0,0);
+        newFire.GetComponent<ScaleEvent>().dieAtSize = events[eventCounter].eventScale;
+        Debug.Log("Event " + eventCounter.ToString());
         eventCounter++;
         timerStart = Time.time;
       }
@@ -33,5 +35,6 @@ public class TriggerTimeline : MonoBehaviour {
   public class TriggerEvent {
     public GameObject target;
     public float afterSeconds;
+    public float eventScale = 1000f;
   }
 }
