@@ -13,8 +13,10 @@ public class AlphaFader : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-    // iTween.ColorTo(gameObject, iTween.Hash("a", initialAlpha, "time", 0f));
-    iTween.FadeTo(gameObject, 0.25f, 0.5f);
+    eventCounter = 0;
+    timerStart = Time.time;
+    iTween.ColorTo(gameObject, iTween.Hash("a", initialAlpha, "time", 0f));
+    // iTween.FadeTo(gameObject, 0.25f, 0.5f);
   }
 
   // Update is called once per frame
